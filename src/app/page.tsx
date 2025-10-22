@@ -1,12 +1,26 @@
-import { LoginForm } from '@/features/auth/components/login-form';
-import {caller} from '@/trpc/server'
-import { json } from 'zod';
-const Page =async() =>{
+import { requireAuth } from "@/lib/auth-utils"
+import { caller } from "@/trpc/server";
+import { ja } from "date-fns/locale";
+import { LogoutButton } from "./logout";
+
+const Page = async() =>{
+  await requireAuth();
+
+  const data = await caller.getUsers();
   
+
   return (
-    <div>
-      <LoginForm />
+    <div className="min-h-screen min-w-screen flex items-center justify-center flex-col gap-y-6">
+      protected server component
+      <div>
+        {JSON.stringify(data,null,2)}
+      </div>
+      <div>
+        <LogoutButton></LogoutButton>
+      </div>
+  
     </div>
+
   )
 }
 export default Page

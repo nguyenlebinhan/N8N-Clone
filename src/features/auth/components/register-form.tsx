@@ -17,40 +17,50 @@ import {
     FormMessage,
 }from "@/components/ui/form"
 import  {Input} from "@/components/ui/input"
+import {cn} from "@/lib/utils"
 import {Card, CardContent, CardDescription, CardHeader,CardTitle} from "@/components/ui/card"
 import { authClient } from "@/lib/auth-client"
 // import  {authClient} from "@/trpc/client/auth-client"
 
-const loginSchema = z.object({
+const registerSchema = z.object({
     email: z.email("Please enter a valid email address"),
     password: z.string().min(1,"Password is required"),
+    confirmedPassword :z.string(),
+})
+.refine((data) => data.password === data.confirmedPassword,{
+    message: "Passwords don't match",
+    path: ["confirmedPassword"],
 })
 
-type loginFormValues = z.infer<typeof loginSchema>
+type registerFormValues = z.infer<typeof registerSchema>
 
-export function LoginForm(){
+export function RegisterForm(){
     const router = useRouter();
-    const form = useForm<loginFormValues>({
-        resolver : zodResolver(loginSchema),
+    const form = useForm<registerFormValues>({
+        resolver : zodResolver(registerSchema),
         defaultValues:{
             email:"",
             password:"",
+            confirmedPassword:"",
         }
     })
-    const onSubmit = async(values: loginFormValues) =>{
-        await authClient.signIn.email({
-            email: values.email,
-            password: values.password,
-            callbackURL:"/",
-        },{
-            onSuccess:()=>{
+    const onSubmit = async(values: registerFormValues) =>{
+        await authClient.signUp.email({
+            name : values.email,
+            email:values.email,
+            password:values.password,
+            callbackURL:"/"
+        },
+        {
+            onSuccess: ()=>{
                 router.push("/");
             },
-            onError:(ctx)=>{
+            onError :(ctx)=>{
                 toast.error(ctx.error.message);
             }
-        })
-    };
+        }
+        );
+    }
 
     const isPending = form.formState.isSubmitting;
 
@@ -59,10 +69,10 @@ export function LoginForm(){
             <Card>
                 <CardHeader className="text-center">
                     <CardTitle>
-                        Welcome back
+                        Get Started
                     </CardTitle>
                     <CardDescription>
-                        Please sign in to your account
+                        Create an account to continue
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -115,7 +125,7 @@ export function LoginForm(){
                                                 <FormControl>
                                                     <Input
                                                         type="password"
-                                                        placeholder="••••••••"
+                                                        placeholder="********"
                                                         {...field}
                                                     >
                                                     </Input>
@@ -123,14 +133,32 @@ export function LoginForm(){
                                                 <FormMessage />
                                             </FormItem>
                                         )}
-                                    />  
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="confirmedPassword"
+                                        render= {({field})=>(
+                                            <FormItem>
+                                                <FormLabel>Confirm Password</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="password"
+                                                        placeholder="********"
+                                                        {...field}
+                                                    >
+                                                    </Input>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />                                        
                                     <Button type="submit" className="w-full" disabled={isPending}>
-                                        Login
+                                        Sign up
                                     </Button>                               
                                 </div>
                                 <div className="text-center text-sm">
-                                    Don&apos;t have an account?{" "}
-                                    <Link href="/signup" className="underline underline-offset-4">Sign up</Link>
+                                    Already have an account?{" "}
+                                    <Link href="/login" className="underline underline-offset-4">Login</Link>
                                 </div>
                             </div>
                         </form>

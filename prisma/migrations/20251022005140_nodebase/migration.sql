@@ -5,12 +5,12 @@ BEGIN TRAN;
 -- CreateTable
 CREATE TABLE [dbo].[user] (
     [id] NVARCHAR(1000) NOT NULL,
-    [name] NVARCHAR(1000) NOT NULL,
     [email] NVARCHAR(1000) NOT NULL,
+    [name] NVARCHAR(1000) NOT NULL,
     [emailVerified] BIT NOT NULL CONSTRAINT [user_emailVerified_df] DEFAULT 0,
     [image] NVARCHAR(1000),
-    [createAt] DATETIME2 NOT NULL CONSTRAINT [user_createAt_df] DEFAULT CURRENT_TIMESTAMP,
-    [updatedAt] DATETIME2 NOT NULL CONSTRAINT [user_updatedAt_df] DEFAULT CURRENT_TIMESTAMP,
+    [createdAt] DATETIME2 NOT NULL CONSTRAINT [user_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
+    [updatedAt] DATETIME2 NOT NULL,
     CONSTRAINT [user_pkey] PRIMARY KEY CLUSTERED ([id]),
     CONSTRAINT [user_email_key] UNIQUE NONCLUSTERED ([email])
 );
@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[user] (
 -- CreateTable
 CREATE TABLE [dbo].[session] (
     [id] NVARCHAR(1000) NOT NULL,
-    [expiredAt] DATETIME2 NOT NULL,
+    [expiresAt] DATETIME2 NOT NULL,
     [token] NVARCHAR(1000) NOT NULL,
     [createdAt] DATETIME2 NOT NULL CONSTRAINT [session_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
     [updatedAt] DATETIME2 NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE [dbo].[account] (
     [refreshTokenExpiresAt] DATETIME2,
     [scope] NVARCHAR(1000),
     [password] NVARCHAR(1000),
-    [createAt] DATETIME2 NOT NULL CONSTRAINT [account_createAt_df] DEFAULT CURRENT_TIMESTAMP,
+    [createdAt] DATETIME2 NOT NULL CONSTRAINT [account_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
     [updatedAt] DATETIME2 NOT NULL,
     CONSTRAINT [account_pkey] PRIMARY KEY CLUSTERED ([id])
 );

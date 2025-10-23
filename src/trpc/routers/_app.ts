@@ -4,9 +4,12 @@ import { createTRPCRouter, protectedProcedure } from '../init';
 import prisma from '@/lib/db';
 import {generateText} from 'ai';
 import {google} from "@ai-sdk/google";
+import { TRPCError } from '@trpc/server';
+import { logger } from 'better-auth';
 
 export const appRouter = createTRPCRouter({
   testAi:protectedProcedure.mutation(async() =>{
+    
     await inngest.send({
       name:"execute/ai"
     })

@@ -1,9 +1,7 @@
-import prisma from "@/lib/db";
 import { inngest } from "./client";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import {createOpenAI} from "@ai-sdk/openai";
 import { generateText } from "ai";
-import { set } from "zod";
 import * as Sentry from "@sentry/nextjs";
 import {createAnthropic} from "@ai-sdk/anthropic";
 

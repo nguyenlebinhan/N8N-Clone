@@ -1,7 +1,10 @@
 "use client"
 
+import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 import { useCreateWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows"
 import { EntityHeader,EntityContainer } from "@/components/entity-components";
+import { useRouter } from "next/navigation";
+
 
 export const WorkflowsList =() =>{
     const workflows = useSuspenseWorkflows();
@@ -17,17 +20,23 @@ export const WorkflowsList =() =>{
 
 export const WorkflowsHeader = ({disabled}: {disabled?:boolean})=>{
     const createWorkflow = useCreateWorkflow();
+    const {handleError,modal} = useUpgradeModal();
+    const router =useRouter();
 
     const handleCreate = ()=>{
         createWorkflow.mutate(undefined,{
+            onSuccess:(data) =>{
+                router.push(`/workflows/${data.id}`);
+            },
             onError:(error)=>{
-                console.error(error);
+                handleError(error);
             },
         });
     }
 
     return (
         <>
+            {modal}
             <EntityHeader
                 title="Workflows"
                 description="Create and manage your workflows"

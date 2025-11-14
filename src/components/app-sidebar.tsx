@@ -1,7 +1,6 @@
 "use client";
 
 import {
-    CreditCardIcon,
     FolderOpenIcon,
     HistoryIcon,
     KeyIcon,
@@ -61,7 +60,7 @@ export const AppSideBar =() =>{
                     <SidebarMenuButton asChild className="gap-x-4 h-10 px-4">
                         <Link href="/" prefetch>
                             <Image src="/logos/logo.svg" alt="NodeBase" width={30} height={30} />
-                            <span className="font-semibold text-sm">Nodebase</span>
+                            <span className="font-semibold text-sm">Zapper</span>
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>

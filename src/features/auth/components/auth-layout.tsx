@@ -6,7 +6,7 @@ const AuthLayout =({ children }: { children: React.ReactNode }) => {
         <div className="flex w-full max-w-sm flex-col gap-6">
             <Link href="/" className="flex justify-center items-center gap-2 font-medium">
                 <Image src="/logos/logo.svg" alt="Logo" width={30} height={30} />
-                NodeBase
+                Zapper
             </Link>        
         <>{children}</>
         </div>

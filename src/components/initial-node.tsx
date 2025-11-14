@@ -12,6 +12,7 @@ export const InitialNode = memo((props:NodeProps)=>{
 
             <PlaceholderNode
                 {...props}
+                onClick={()=>{}}
                 
             >
                 <div className="cursor-pointer flex items-center justify-center">

@@ -15,6 +15,7 @@ import {
     SheetTrigger
 }from "@/components/ui/sheet"
 import { Separator } from "@radix-ui/react-select"
+import { on } from "events"
 
 
 export type NodeTypeOption = {
@@ -54,6 +55,56 @@ export function NodeSelector ({
     onOpenChange,
     children,
 }:NodeSelectorProps) {
+    const {setNodes, getNodes,screenToFlowPosition} = useReactFlow();
+
+    const handleNodeSelect = useCallback((selection:NodeTypeOption)=>{
+        if (selection.type === NodeType.MANUAL_TRIGGER){
+            const nodes = getNodes();
+            const hasManualTrigger = nodes.some(
+                (node) => node.type === NodeType.MANUAL_TRIGGER,
+            );
+
+            if(hasManualTrigger){
+                toast.error("On;y one manual trigger node is allowed");
+                return;
+            }
+        }
+
+        setNodes((nodes) =>{
+            const hasInitialTrigger = nodes.some(
+                (node) => node.type === NodeType.INITIAL,
+            );
+            
+            const centerX  = window.innerWidth/2;
+            const centerY = window.innerHeight/2;
+
+            const flowPosition = screenToFlowPosition({
+                x: centerX + (Math.random() -0.5) *200,
+                y: centerY + (Math.random() -0.5) *200,
+            });
+
+            const newNode = {
+                id : createId(),
+                data: {},
+                position: flowPosition,
+                type : selection.type,
+            };
+
+            if(hasInitialTrigger){
+                return [newNode];
+            }
+
+            return [...nodes,newNode];
+        });
+        onOpenChange(false);
+    },[
+        setNodes,
+        getNodes,
+        onOpenChange,
+        screenToFlowPosition
+    ]) 
+
+
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
             <SheetTrigger asChild>{children}</SheetTrigger>
@@ -73,7 +124,7 @@ export function NodeSelector ({
                             <div
                                 key={nodeType.type}
                                 className="w-full justify-start h-auto py-5 px-4 rounded-nne cursor-pointer border-l-2 border-transparent hover:border-l-primary"
-                                onClick={()=>{}}
+                                onClick={()=>handleNodeSelect(nodeType)}
                             >
                                 <div className="flex items-center gap-6 w-full overflow-hidden">
                                     {typeof Icon === "string"?(
@@ -108,7 +159,7 @@ export function NodeSelector ({
                             <div
                                 key={nodeType.type}
                                 className="w-full justify-start h-auto py-5 px-4 rounded-nne cursor-pointer border-l-2 border-transparent hover:border-l-primary"
-                                onClick={()=>{}}
+                                onClick={()=>handleNodeSelect(nodeType)}
                             >
                                 <div className="flex items-center gap-6 w-full overflow-hidden">
                                     {typeof Icon === "string"?(

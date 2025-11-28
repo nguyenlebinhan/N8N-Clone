@@ -43,7 +43,6 @@ export const workflowsRouter = createTRPCRouter({
                         type:z.string().nullish(),
                         position:z.object({x:z.number(),y:z.number()}),
                         data:z.record(z.string(),z.any()).optional(),
-
                     })
                 ),
                 edges: z.array(

@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent,DialogDescription,DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent,DialogDescription,DialogFooter,DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     endpoint:z.url({message:"Please enter a valid URL"}),
@@ -17,6 +19,8 @@ const formSchema = z.object({
 //    .refine TODO
 })
 
+
+export type FormType = z.infer<typeof formSchema>;
 
 interface Props{
     open:boolean;
@@ -43,6 +47,16 @@ export const HttpRequestDialog =({
             body:defaultBody
         }
     })
+
+    useEffect(()=>{
+        if(open){
+            form.reset({
+                endpoint:defaultEndpoint,
+                method:defaultMethod,
+                body:defaultBody
+            }) 
+        }
+    },[open,defaultEndpoint,defaultMethod,defaultBody,form])
 
     const watchMethod = form.watch("method");
     const showBodyField =["POST","PUT","PATCH"].includes(watchMethod);
@@ -120,22 +134,27 @@ export const HttpRequestDialog =({
                             name="body"
                             render={({field})=>(
                                 <FormItem>
-                                    <FormLabel>RRequest Body</FormLabel>
+                                    <FormLabel>Request Body</FormLabel>
                                     <FormControl>
                                         <Textarea
-                                        placeholder="https://api.example.com/users/{{httpResponse.data.id}}" 
+                                        placeholder={
+                                            '{\n "userId": "{{httpResponse.data.id}}",\n "name":"{{httpResponse.data.name}}",\n "items":"{{httpResponse.data.items}}"\n}'
+                                        } 
                                         className="min-h-[120px] font-mono text-sm"
                                         {...field}/>
                                     </FormControl>
                                     <FormDescription>
-                                        Static URL or use {"{{variables}}"} for simple values or {"{{json variables}}"} to stringify objects.
+                                        JSON with template variables. Use {"{{variables}}"} for simple values or {"{{json variable}}"} to stringify objects.
                                     </FormDescription>
                                     <FormMessage/>
                                 </FormItem>
                             )}                            
                             
                             />
-                        )}                     
+                        )}    
+                        <DialogFooter className="mt-4">
+                            <Button type="submit">Save</Button>
+                        </DialogFooter>                 
                     </form>          
                 </Form>
             </DialogContent>

@@ -1,7 +1,7 @@
 "use client"
 
 import { Dialog, DialogContent,DialogDescription,DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { on } from "events";
+
 
 interface Props{
     open:boolean;

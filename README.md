@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# N8N Clone
 
-First, run the development server:
+A powerful, open-source workflow automation tool built with modern web technologies. This project is a clone of [n8n](https://n8n.io/), designed to provide a visual node-based editor for automating tasks and integrating various services.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+![Project Status](https://img.shields.io/badge/status-development-orange)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+## 🚀 Tech Stack
+
+This project leverages a robust modern stack to ensure performance, scalability, and type safety:
+
+- **Framework:** [Next.js 14+](https://nextjs.org/) (App Router)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Database ORM:** [Prisma](https://www.prisma.io/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components:** [Shadcn/ui](https://ui.shadcn.com/)
+- **Error Tracking:** [Sentry](https://sentry.io/)
+- **Linting:** ESLint
+
+## ✨ Features
+
+- **Visual Workflow Editor:** Drag-and-drop interface to connect nodes and build automations.
+- **Node-based Architecture:** Modular components for triggers, actions, and logic.
+- **Database Integration:** Persistent storage for workflow execution data and user configurations using Prisma.
+- **Real-time Monitoring:** Integration with Sentry for error tracking and performance monitoring.
+- **Responsive Design:** Fully responsive UI built with Tailwind CSS.
+
+## 🛠️ Getting Started
+
+Follow these steps to set up the project locally on your machine.
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm, yarn, or pnpm
+- A database (PostgreSQL or MySQL recommended, matching your `schema.prisma` configuration)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/nguyenlebinhan/N8N-Clone.git](https://github.com/nguyenlebinhan/N8N-Clone.git)
+   cd N8N-Clone
+````
+
+2.  **Install dependencies**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3.  **Environment Setup**
+    Create a `.env` file in the root directory. You can copy the structure from an example file if provided, or add the following core variables:
+
+    ```env
+    # Database Connection
+    DATABASE_URL="postgresql://user:password@localhost:5432/n8n_clone?schema=public"
+
+    # Sentry (Optional for local dev)
+    SENTRY_AUTH_TOKEN=your_sentry_token
+    ```
+
+4.  **Database Migration**
+    Push the Prisma schema to your database:
+
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    ```
+
+5.  **Run the Development Server**
+
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) with your browser to see the application.
+
+## 📂 Project Structure
+
+```text
+├── prisma/               # Database schema and migrations
+├── public/               # Static assets
+├── src/
+│   ├── app/              # Next.js App Router pages and layouts
+│   ├── components/       # Reusable UI components
+│   ├── lib/              # Utility functions and libraries
+│   └── types/            # TypeScript type definitions
+├── components.json       # Shadcn UI configuration
+├── next.config.ts        # Next.js configuration
+├── sentry.*.config.ts    # Sentry configuration files
+└── package.json          # Project dependencies and scripts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🤝 Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are welcome\! Please feel free to submit a Pull Request.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  Fork the project
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+http://googleusercontent.com/youtube_content/0
+```

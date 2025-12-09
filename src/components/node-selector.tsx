@@ -15,7 +15,6 @@ import {
     SheetTrigger
 }from "@/components/ui/sheet"
 import { Separator } from "@radix-ui/react-select"
-import { on } from "events"
 
 
 export type NodeTypeOption = {
@@ -65,7 +64,7 @@ export function NodeSelector ({
             );
 
             if(hasManualTrigger){
-                toast.error("On;y one manual trigger node is allowed");
+                toast.error("Only one manual trigger node is allowed");
                 return;
             }
         }
